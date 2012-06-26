@@ -24,11 +24,16 @@ module Humanizer
   def humanizer_correct_answer?
     humanizer_answer && humanizer_answers_for_id(humanizer_question_id).include?(humanizer_answer.mb_chars.downcase)
   end
+  
+  def change_list(list_name = "questions")
+    @humanizer_questions = nil     # unset the var to force it to reload
+    humanizer_questions(list_name) # call method to load
+  end
 
   private
   
-  def humanizer_questions
-    @humanizer_questions ||= I18n.translate("humanizer.questions")
+  def humanizer_questions(list_name = "questions")
+    @humanizer_questions ||= I18n.translate("humanizer.#{list_name}")
   end
 
   def humanizer_question_ids

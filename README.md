@@ -36,6 +36,27 @@ Default translations can be found in config/locales/
 
 You might want to add/change question and answer pairs. This can be easily done by adding/modifying entries in locales file.
 
+## Reloading questions
+
+You can have more then one list of questions, perhaps if a user gets a question wrong, you may want to choose one from another list. Add the different lists as such:
+
+    questions:
+      - question: Two plus two?
+        answers: ["4", "four"]
+      - question: Jack and Jill went up the...
+        answer: hill
+    games:
+      - question: What color is pacman?
+        answer: yellow
+      - question: What is the name of mario's princess?
+        answers: ["peach","princess peach"]
+
+questions is the default list, and the you can have other named lists.
+
+Change the list as so:
+
+      @user.change_list("games")
+
 ## Skipping validation
 
 You might want to skip the humanizer validations on your tests or rails console.
@@ -47,13 +68,12 @@ You can just have a simple attribute on your model and use it to bypass the vali
 
 Now when bypass_humanizer is true, validation will be skipped.
 
-## Reloading questions
-
 In case you want to give your users the option to change the question, there's a #change_humanizer_question method to help you.
 
 To make sure the current question doesn't get asked again, you can pass the current question id to the method. For example:
 
     @user.change_humanizer_question(params[:user][:humanizer_question_id])
+## Different Question Lists
           
 ## Live sites
 
@@ -79,6 +99,7 @@ Humanizer is licensed under the MIT License, for more details see the LICENSE fi
 * [Florian Bertholin](https://github.com/Arkan)
 * [seogrady](https://github.com/seogrady)
 * [yairgo](https://github.com/yairgo)
+* [rubygeek](https://github.com/rubygeek)
 
 ## CI Build Status
 

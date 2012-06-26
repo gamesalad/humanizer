@@ -16,13 +16,12 @@ describe Humanizer do
     
     it "adds questions and answers to the instances" do
       questions = @user.send(:humanizer_questions)
-      questions.count.should == 2
+      questions.count.should == 3
       questions[0]["question"].should == "Two plus two?"
       questions[0]["answers"].should == ["4", "four"]
-      questions[1]["question"].should == "Jack and Jill went up the..."
-      questions[1]["answer"].should == "hill"
-    end
-    
+      questions[2]["question"].should == "What comes after 20?"
+      questions[2]["answers"].should == ["21","twenty-one"]
+   end
   end
   
   context "question" do
@@ -66,6 +65,11 @@ describe Humanizer do
       @user.humanizer_correct_answer?.should be_true
       @user.humanizer_answer = "four"
       @user.humanizer_correct_answer?.should be_true
+      @user.humanizer_question_id = 2
+      @user.humanizer_answer = "21"
+      @user.humanizer_correct_answer?.should be_true
+      @user.humanizer_answer = "20"
+      @user.humanizer_correct_answer?.should be_false
     end
     
     it "is case-insensitive" do
@@ -89,15 +93,43 @@ describe Humanizer do
     end
     
   end
-  
+
+  describe "#change_list" do
+    it "loads a new list" do
+      @user.change_list("games")
+      questions = @user.send(:humanizer_questions)
+      questions.count.should == 2
+      questions[0]["question"].should == "What color is pacman?"
+      questions[0]["answer"].should == "yellow"
+    end
+
+    it "chooses a gaming question and answers it" do
+      @user.change_list("games")
+      @user.humanizer_question_id = 0
+      @user.instance_variable_get(:@humanizer_question_id).should_not be_nil
+      @user.humanizer_answer = "yellow"
+      @user.humanizer_correct_answer?.should be_true
+    end
+
+    it "should change list and then change back to default" do
+      @user.change_list("games")
+      questions = @user.send(:humanizer_questions)
+      questions[0]["question"].should == "What color is pacman?"
+
+      @user.change_list #go back to default list
+      questions = @user.send(:humanizer_questions)
+      questions[0]["question"].should == "Two plus two?"
+    end
+  end
+
   describe "#change_humanizer_question" do
     
     it "sets humanizer_question_id with no params" do
       @user.change_humanizer_question
       @user.instance_variable_get(:@humanizer_question_id).should_not be_nil
     end
-
-    context "when passing in a value" do
+    
+     context "when passing in a value" do
 
       before(:each) do
         questions = mock(:count => 4)

@@ -7,3 +7,10 @@ en:
         answers: ["4", "four"]
       - question: Jack and Jill went up the...
         answer: hill
+      - question: "What comes after 20?"
+        answers: ["21", "twenty-one"]
+    games:
+      - question: What color is pacman?
+        answer: yellow
+      - question: What is the name of mario's princess?
+        answers: ["peach","princess peach"]
