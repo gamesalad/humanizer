@@ -36,7 +36,7 @@ Default translations can be found in config/locales/
 
 You might want to add/change question and answer pairs. This can be easily done by adding/modifying entries in locales file.
 
-## Reloading questions
+## Multiple Lists and Reloading questions
 
 You can have more then one list of questions, perhaps if a user gets a question wrong, you may want to choose one from another list. Add the different lists as such:
 
@@ -51,7 +51,7 @@ You can have more then one list of questions, perhaps if a user gets a question 
       - question: What is the name of mario's princess?
         answers: ["peach","princess peach"]
 
-questions is the default list, and the you can have other named lists.
+questions is the default list, and then you can have other named lists.
 
 Change the list as so:
 
